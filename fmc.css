@@ -1,0 +1,146 @@
+/* 福岡マーケコネクト告知版（試作）の上乗せ分。会社HPのCSSはそのまま読み、ここで足す。 */
+.intro-copy h1{letter-spacing:.22em}
+.intro-copy .intro-date{margin:0;font:400 12px var(--sans);letter-spacing:.42em;color:#c9d3d6}
+@media(min-width:881px){.concept-surface h2{font-size:clamp(22px,2.3vw,34px)}}
+.concept-date{margin-top:14px!important;font-size:13px!important;letter-spacing:.12em;color:#2c4a55}
+
+/* 確定前の印 */
+.tbd{display:inline-block;margin:0 .4em;padding:.15em .7em;border:1px dashed #b9892e;border-radius:4px;background:#fff3d6cc;color:#7a5512;font:500 11px/1.6 var(--sans);letter-spacing:.04em;vertical-align:middle;white-space:nowrap}
+.surface h2 .tbd{font-size:11px;letter-spacing:.04em}
+.role{margin:-10px 0 14px!important;font-size:12px!important;letter-spacing:.06em;color:#36525c}
+.placeholder-note{margin-top:12px!important;font-size:10px!important;color:#5f747b!important}
+.proto-tag{display:inline-flex;align-items:center;padding:6px 10px;border:1px dashed #e0b25a;border-radius:20px;color:#f1d9a6;font-size:9px;letter-spacing:.12em;white-space:nowrap}
+body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-color:#b9892e}
+
+/* 日程・会場 */
+.schedule-surface h2{margin:18px 0 14px}
+.event-facts,.entry-summary{display:grid;gap:0;margin:0 0 22px;border-top:1px solid #2a43492a}
+.event-facts div,.entry-summary div{display:grid;grid-template-columns:5.5em 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #2a43492a;align-items:baseline}
+.event-facts dt,.entry-summary dt{font-size:10px;letter-spacing:.14em;color:#5f747b}
+.event-facts dd,.entry-summary dd{margin:0;font-size:14px;line-height:1.8;letter-spacing:.03em}
+.event-facts dd .tbd,.entry-summary dd .tbd{margin-left:0}
+.entry-button{text-decoration:none;gap:22px}
+.entry-button span,.entry-fab span,.entry-box .button span{font-size:9px;letter-spacing:.1em;opacity:.75}
+.entry-summary{margin-top:26px}
+.entry-box .button{margin:18px 0 10px;width:100%;opacity:.55;cursor:not-allowed}
+
+/* スマホでは下に申込ボタンを出し続ける（FVと申込の場面では隠す） */
+.entry-fab{display:none}
+@media(max-width:880px){
+ .entry-fab{position:fixed;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:40;display:flex;justify-content:space-between;align-items:center;min-height:50px;padding:0 22px;border-radius:30px;background:#10222bee;color:#f0f3ef;font-size:13px;letter-spacing:.12em;text-decoration:none;box-shadow:0 10px 30px #0006;backdrop-filter:blur(10px);transition:opacity .4s,transform .4s}
+ body:not([data-chapter]) .entry-fab,body[data-chapter=prologue] .entry-fab,body[data-chapter=entry] .entry-fab{opacity:0;transform:translateY(20px);pointer-events:none}
+ .proto-tag{position:fixed;top:calc(var(--header) - 6px);left:16px;padding:3px 8px;font-size:8px;background:#0c0c0e99}
+ body.paper-active .proto-tag,.header.is-light .proto-tag{background:#fff3d6cc}
+ .schedule-surface .entry-button{display:none}
+ .service-journey .scene,.rooftop-chapter .scene{padding-bottom:110px!important}
+ .event-facts dd{font-size:13px}
+}
+
+/* 11/11 本人の修正指示を反映 */
+/* ヘッダー・フッター：日本語の名前だけを見やすく */
+.brand .brand-ja{font:500 17px var(--serif);letter-spacing:.14em}
+@media(max-width:880px){.brand .brand-ja{font-size:15px;letter-spacing:.1em}}
+/* FV：日本語の名前を大きく */
+.intro-copy h1{font-size:clamp(34px,4.4vw,62px)!important;letter-spacing:.2em!important;margin:22px 0 18px!important}
+@media(max-width:880px){.intro-copy h1{font-size:clamp(26px,7.6vw,38px)!important;letter-spacing:.1em!important;white-space:nowrap}}
+.intro-copy .eyebrow{letter-spacing:.32em}
+
+/* 日程・料金 */
+.sub-line{display:block;font-size:12px;line-height:1.9;color:#36525c}
+.sub-indent{padding-left:1em}
+.event-facts .sub-line{font-size:11.5px}
+.price{font-weight:600;letter-spacing:.04em}
+.tax{font-size:11px;margin-left:2px}
+.price-note{display:block;margin-top:2px;font-size:10.5px;color:#5f747b}
+.schedule-surface{max-height:calc(100vh - var(--header) - 40px);overflow:auto}
+.schedule-surface .event-facts div{padding:8px 0}
+.schedule-surface h2{margin:12px 0 10px!important}
+
+/* 申込フォーム */
+.entry-form .form-lead{font-size:11px!important;margin:0 0 18px;color:#5f747b}
+.field select{width:100%;padding:12px;border:1px solid #263f493a;border-radius:2px;background:#fff8;color:#213139;font:13px var(--sans)}
+.field .optional{color:#8a9a9e!important}
+.choice{border:0;padding:0;margin:0 0 20px;min-width:0}
+.choice legend{font-size:12px;margin-bottom:9px;padding:0}
+.choice legend span{font-size:9px;margin-left:10px;color:#566f78}
+.choice-row,.check-row{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid #263f492a;border-radius:4px;background:#fff6;margin-bottom:8px;cursor:pointer;font-size:12px;line-height:1.7}
+.choice-row b{display:block;font-weight:600;font-size:13px}
+.choice-row input,.check-row input{margin-top:4px;accent-color:#223a44}
+.check-row{border:0;background:none;padding:6px 0}
+.check-row em{font-style:normal;font-size:9px;color:#566f78;margin-left:6px}
+.is-invalid input,.is-invalid select,.is-invalid textarea,.choice.is-invalid .choice-row,.check-row.is-invalid{border-color:#b55d3e!important;background:#f6e6dd88}
+.check-row.is-invalid{padding:6px 8px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.submit-button{width:100%;margin-top:14px}
+.submit-button:disabled{opacity:.6;cursor:wait}
+.entry-done h3{font:400 22px var(--serif);margin:0 0 12px}
+.entry-done p{font-size:12px!important;line-height:2}
+@media(max-width:880px){.field select{font-size:16px}}
+.choice-row input,.check-row input{width:auto!important;padding:0!important;flex:none;border:0}
+@media(min-width:881px){.service-journey .schedule-surface{width:min(500px,46%)!important;max-width:500px}}
+.event-facts div{grid-template-columns:4.6em 1fr}
+.price{white-space:nowrap}
+/* 会場のマップボタン・キャンセルの注意書き */
+.map-link{display:inline-flex;align-items:center;gap:6px;margin:6px 0 0;padding:6px 12px 6px 9px;border:1px solid #223a4455;border-radius:20px;color:#223a44;background:#fff8;font-size:11px;letter-spacing:.04em;text-decoration:none;width:max-content}
+.map-link svg{width:14px;height:14px}
+.map-link:hover{background:#223a44;color:#f0f3ef}
+.event-facts dd .map-link,.entry-summary dd .map-link{display:flex}
+.field-note{margin:4px 0 0!important;padding:9px 11px;border-left:3px solid #b9892e;background:#fff3d699;font-size:11px!important;line-height:1.8!important;color:#4a3a14}
+.guide-block{margin:18px 0 0;padding-top:14px;border-top:1px solid #2a43492a}
+.guide-block h4{margin:0 0 8px;font:600 13px var(--sans);letter-spacing:.04em}
+.guide-block p{margin:0!important;font-size:12px!important;line-height:1.9!important;white-space:pre-line}
+.guide-block .map-link{margin-top:8px}
+.entry-done .test-note{margin-top:14px!important;padding:9px 11px;background:#fff3d699;border-left:3px solid #b9892e;font-size:11px!important}
+/* 申込欄の説明：PCは「右の」、スマホは「下の」 */
+.sp-only{display:none}
+@media(max-width:880px){.pc-only{display:none}.sp-only{display:inline}}
+/* 「（税込）」を途中で折り返さない */
+.tax{white-space:nowrap;display:inline-block}
+/* 申込後の案内：箇条書き（金額・振込先・Wi-Fi）とQRコード */
+.guide-items{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:8px 0 0;font-size:12px;line-height:1.8}
+.guide-items dt{color:#5f747b;white-space:nowrap}
+.guide-items dt::before{content:"・";color:#9aa8ad}
+.guide-items dd{margin:0;white-space:pre-line;font-weight:500}
+.guide-qr{display:block;margin:12px 0 0;width:150px;height:150px;image-rendering:pixelated;border:1px solid #263f4920;border-radius:4px;background:#fff}
+/* 申込締切 */
+.deadline-row dd b{font-weight:600;letter-spacing:.04em}
+/* 締切後の注意書き（申込後の案内の先頭・フォームの上） */
+.guide-notice{margin-left:-12px!important;padding:14px 12px 14px 12px!important;border:0!important;border-left:4px solid #b55d3e!important;background:#f6e6dd99;border-radius:2px}
+.guide-notice h4{color:#8a3a1e}
+.late-note{margin:0 0 16px!important;padding:10px 12px;border-left:3px solid #b55d3e;background:#f6e6dd99;font-size:11.5px!important;line-height:1.8!important;color:#5a2a16}
+/* 講師カードの中の講義内容（講師と講義内容を1つの場面にまとめた形） */
+.lecture-block{margin:16px 0 4px;padding-top:14px;border-top:1px solid #18323c26}
+.lecture-label{margin:0 0 4px!important;font-size:10.5px!important;letter-spacing:.18em;color:#36525c}
+.lecture-title{margin:0 0 8px;font-size:clamp(17px,1.6vw,23px);line-height:1.5;font-weight:600;color:#18323c}
+.lecture-title .tbd{font-size:11px;letter-spacing:.04em}
+@media(max-width:880px){.lecture-block{margin-top:12px;padding-top:10px}.lecture-title{font-size:16px}}
+
+/* 講師2：講師が右に立つので、PCではカードを左に置く（11/14 本人「逆位置」） */
+@media(min-width:881px){.service-journey[data-copy-position=left] .scene{justify-content:flex-start}}
+
+/* 11/14 PC・スマホの通し確認で見つけた見た目の不具合の修正 */
+/* 申込フォームの選択肢：会社HPの「.field label」の指定（display:block・span 9px）が効いて、丸ボタンが文字の上に回り、金額・支払い方法の文字が9pxになっていた */
+.choice .choice-row{display:flex;font-size:12px;margin-bottom:8px}
+.choice .choice-row span{margin-left:0;font-size:12px;color:inherit}
+.choice .choice-row span b{font-size:13px}
+/* 俯瞰の文字の板（PC）：下半分に街が入り、本文と日付の行が背景に埋もれていたので板を少し濃くする */
+@media(min-width:881px){.rooftop-chapter .concept-surface{background:#ffffff8f;backdrop-filter:blur(12px) saturate(1.08)}}
+/* スマホ：日程・会場の板が画面の下（申込ボタンの裏）にはみ出し、申込締切の行が隠れていたので詰める */
+@media(max-width:880px){
+ .schedule-surface{padding:20px 20px 18px!important}
+ .schedule-surface h2{margin:8px 0 6px!important}
+ .schedule-surface .event-facts div{padding:6px 0;gap:8px}
+ .schedule-surface .event-facts dd{font-size:12.5px;line-height:1.65}
+ .schedule-surface .event-facts .sub-line{line-height:1.6}
+ .schedule-surface .map-link{margin-top:4px;padding:4px 11px 4px 8px}
+ .schedule-surface .price-note{font-size:10px}
+ .schedule-surface .event-facts{margin-bottom:0}
+}
+
+/* 11/14 本人「X確認できる状態にもしておきたい」：講師カードにXへのリンク */
+.x-link{display:inline-block;margin:-6px 0 4px;padding:3px 10px;border:1px solid #18323c40;border-radius:999px;font-size:11.5px;letter-spacing:.04em;color:#18323c;text-decoration:none;background:#ffffff66}
+.x-link:hover{background:#18323c;color:#fff}
+/* 11/14 本人が出した杉永さんの講義内容3点を、そのまま箇条書きで見せる */
+.lecture-points{margin:0;padding:0 0 0 1.1em;font-size:13px;line-height:1.8;color:#18323c}
+.lecture-points li{margin:0 0 2px}
+@media(max-width:880px){.lecture-points{font-size:12px;line-height:1.7}}

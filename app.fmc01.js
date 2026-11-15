@@ -54,7 +54,7 @@ document.querySelectorAll('.surface').forEach(surface=>{surface.addEventListener
 function updateScene(now){
  y=scrollY;document.body.dataset.visualScrollY=y.toFixed(2);if(!bounds.length)return;
  sectionNodes.filter(n=>n.classList.contains('film-chapter')).forEach(n=>{const p=n.querySelector('.scene');p.style.visibility='hidden';p.style.opacity=0;p.style.pointerEvents='none';});
- const roof=bounds[1],roofExit=roof.top+roof.height,filmEnd=bounds[plan.services.length+1].top+bounds[plan.services.length+1].height,arrival=roof.top-height*.32,intro=clamp(y/arrival);
+ const roof=bounds[1],roofExit=roof.top+roof.height,filmEnd=bounds[plan.services.length+1].top+bounds[plan.services.length+1].height,arrival=roof.top-height*.32,intro=clamp(y/roof.top);
  const introVisible=1-smooth(.015,.07,intro);$('introCopy').style.opacity=introVisible;$('introCopy').style.transform='translateY('+(-18*(1-introVisible))+'px)';document.querySelector('.intro-bottom').style.opacity=introVisible;
  const opening=$('firstView');opening.style.opacity=y<roof.top?'1':'0';opening.contentWindow?.postMessage({type:'sample-fv',active:y<=roof.top&&!isHidden,reduced:lowMotion,progress:intro,pointer},location.origin);
  $('prism').style.opacity=0;$('fallback').style.opacity=0;$('flash').style.opacity=0;$('dust').style.opacity=0;$('travel').style.opacity=0;
@@ -63,7 +63,7 @@ function updateScene(now){
  if(y<roof.top){stopVideos();document.body.dataset.mediaState=intro<.035?'waiting-particles':intro<1?'existing-video':'arrival-hold';if(y>=arrival){chapter=1;panel($('rooftop'),1,now);light=true;}else arrivalKey='';phase='opening';}
  else if(y<roofExit){
   chapter=1;mobileFocalPoint=.10;beginCanvas();const t=plan.timing,p=clamp((y-roof.top-t.roofReadScreens*height)/(t.descentScreens*height));
-  if(p===0){stopVideos(roofVideo);if(phase!=='roof-hold'){if(roofVideo.readyState>0)roofVideo.currentTime=0;roofVideo.dataset.playback='playing';if(!lowMotion&&!isHidden)roofVideo.play().catch(()=>{});}if(lowMotion||document.querySelector('dialog[open]'))roofVideo.pause();else if(roofVideo.paused&&roofVideo.currentTime<plan.roof.endTime)roofVideo.play().catch(()=>{});drawSource(roofVideo.readyState>1?roofVideo:asset(plan.roof.poster));panel($('rooftop'),1,now);phase='roof-hold';}
+  if(p===0){stopVideos(roofVideo);if(phase!=='roof-hold'){roofVideo.currentTime=plan.roof.startTime||0;roofVideo.dataset.playback='playing';if(!lowMotion&&!isHidden)roofVideo.play().catch(()=>{});}if(lowMotion||document.querySelector('dialog[open]'))roofVideo.pause();else if(roofVideo.paused&&roofVideo.currentTime<plan.roof.endTime)roofVideo.play().catch(()=>{});drawSource(roofVideo.readyState>1?roofVideo:asset(plan.roof.poster));panel($('rooftop'),1,now);phase='roof-hold';}
   else{stopVideos();arrivalKey='';const paths=plan.descent.frames,fp=Math.min(p/.84,1),cut=plan.descent.firstPartFraction,wanted=fp<cut?Math.round(fp/cut*60):61+Math.round((fp-cut)/(1-cut)*60);let found=wanted;while(found>0&&!images.has(paths[found]))found--;const im=images.get(paths[found]);drawSource(im||asset(plan.roof.poster));if(p>.84){still(plan.services[0].outside,smooth(.84,1,p));notice('接続映像準備中');}canvas.dataset.renderedFrame=String(found);phase='roof-descent';}
   light=true;document.body.dataset.mediaState=phase;document.body.dataset.mediaKind='existing-video';
  }

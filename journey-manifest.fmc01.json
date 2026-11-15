@@ -4,7 +4,8 @@
   "video": "journey-media/gen/roof.95f876b6e915.mp4",
   "endTime": 9999,
   "kind": "generated-video",
-  "loop": true
+  "loop": true,
+  "startTime": 2.0
  },
  "descent": {
   "frames": [

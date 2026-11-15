@@ -4,9 +4,11 @@ const $=id=>document.getElementById(id),clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b
 const smooth=(a,b,v)=>{const p=clamp((v-a)/(b-a));return p*p*(3-2*p)};
 const sectionNodes=[...document.querySelectorAll('section[data-chapter]')];
 const chapterTitles=['ファーストビュー','福岡の俯瞰','講師1','講師2','日程・会場','お申し込み'];
+// The speakers stand on opposite sides of their landscape source frames.
+const mobileFocalPoints={'lecturer-1':.10,'lecturer-2':.92};
 const systemMotion=matchMedia('(prefers-reduced-motion:reduce)'),fine=matchMedia('(hover:hover) and (pointer:fine)');
 let width=innerWidth,height=innerHeight,small=width<=880,lowMotion=systemMotion.matches,isHidden=document.hidden;
-let bounds=[],frame=0,last=0,time=0,active=-1,y=scrollY,phase='',pointer={x:0,y:0},surfaceTarget={x:0,y:0},surfaceCurrent={x:0,y:0};
+let bounds=[],frame=0,last=0,time=0,active=-1,y=scrollY,phase='',mobileFocalPoint=.5,pointer={x:0,y:0},surfaceTarget={x:0,y:0},surfaceCurrent={x:0,y:0};
 let arrivalKey='',arrivalSince=0,settleTimer=0,settleFrame=0,pointerHeld=false,scrollDirection=1,observedY=scrollY;
 let plan;try{const r=await fetch('journey-manifest.fmc01.json',{cache:'no-cache'});if(!r.ok)throw Error('Journey unavailable');plan=await r.json();}catch(e){console.error(e);return;}
 const safe=p=>typeof p==='string'&&/^(media|journey-media)\/[a-zA-Z0-9_./-]+$/.test(p)&&!p.includes('..');
@@ -29,9 +31,10 @@ function arrivedOpacity(key,now){if(arrivalKey!==key){arrivalKey=key;arrivalSinc
 function setMotion(value){cancelSettle();lowMotion=value;document.documentElement.style.scrollBehavior=value?'auto':'smooth';document.body.classList.toggle('low-motion',value);$('motionToggle').textContent=value?'動きを戻す':'動きを弱める';$('motionToggle').setAttribute('aria-pressed',String(value));stopVideos();phase='';schedule();}
 $('motionToggle').addEventListener('click',()=>setMotion(!lowMotion));systemMotion.addEventListener('change',e=>setMotion(e.matches));
 function measure(){const t=plan.timing;const roof=$('rooftop');roof.style.height=height*(t.roofReadScreens+t.descentScreens)+'px';const span=t.outerScreens+t.entryScreens+t.innerScreens+t.exitScreens+t.transferScreens;plan.services.forEach(s=>{$(s.id).style.height=height*span+'px';$(s.id+'-inside').style.top=height*(t.outerScreens+t.entryScreens)+'px';});bounds=sectionNodes.map(n=>({id:n.id,name:n.dataset.chapter,top:n.offsetTop,height:n.offsetHeight}));}
-function frameRect(){if(!small||(bounds[1]&&y<bounds[1].top+bounds[1].height))return {x:0,y:0,w:width,h:height};return {x:0,y:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header'))+12,w:width,h:width*9/16};}
 function drawSource(source,quad,alpha=1){if(!source)return false;const sw=source.videoWidth||source.naturalWidth,sh=source.videoHeight||source.naturalHeight;if(!sw||!sh)return false;let sx=0,sy=0,cw=sw,ch=sh;if(Number.isInteger(quad)){cw=sw/2-5;ch=sh/2-5;sx=(quad%2)*sw/2+2.5;sy=Math.floor(quad/2)*sh/2+2.5;}
- const r=frameRect(),scale=Math.max(r.w/cw,r.h/ch),dw=cw*scale,dh=ch*scale;ctx.save();ctx.beginPath();ctx.rect(r.x,r.y,r.w,r.h);ctx.clip();ctx.globalAlpha=alpha;ctx.drawImage(source,sx,sy,cw,ch,r.x+(r.w-dw)*(small&&bounds[1]&&y<bounds[1].top+bounds[1].height?.1:.5),r.y+(r.h-dh)/2,dw,dh);ctx.restore();return true;}
+ const scale=Math.max(width/cw,height/ch),dw=cw*scale,dh=ch*scale;
+ const focus=small?mobileFocalPoint:.5;
+ ctx.save();ctx.globalAlpha=alpha;ctx.drawImage(source,sx,sy,cw,ch,(width-dw)*focus,(height-dh)/2,dw,dh);ctx.restore();return true;}
 function beginCanvas(){const dpr=canvas.width/width;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalAlpha=1;ctx.fillStyle=small?'#0c0c0e':'#171b1c';ctx.fillRect(0,0,width,height);}
 function still(m,alpha=1){return drawSource(asset(m.image),m.quad,alpha);}
 function blend(a,b,p){still(a);still(b,smooth(0,1,p));}
@@ -59,13 +62,16 @@ function updateScene(now){
  canvas.style.opacity=y>=roof.top&&y<filmEnd?'1':'0';$('mediaDeck').style.opacity=y>=roof.top&&y<filmEnd?'1':'0';$('blackTide').style.transform=y>=filmEnd?'translateY(0%)':'translateY(110%)';notice('');
  if(y<roof.top){stopVideos();document.body.dataset.mediaState=intro<.035?'waiting-particles':intro<1?'existing-video':'arrival-hold';if(y>=arrival){chapter=1;panel($('rooftop'),1,now);light=true;}else arrivalKey='';phase='opening';}
  else if(y<roofExit){
-  chapter=1;beginCanvas();const t=plan.timing,p=clamp((y-roof.top-t.roofReadScreens*height)/(t.descentScreens*height));
+  chapter=1;mobileFocalPoint=.10;beginCanvas();const t=plan.timing,p=clamp((y-roof.top-t.roofReadScreens*height)/(t.descentScreens*height));
   if(p===0){stopVideos(roofVideo);if(phase!=='roof-hold'){if(roofVideo.readyState>0)roofVideo.currentTime=0;roofVideo.dataset.playback='playing';if(!lowMotion&&!isHidden)roofVideo.play().catch(()=>{});}if(lowMotion||document.querySelector('dialog[open]'))roofVideo.pause();else if(roofVideo.paused&&roofVideo.currentTime<plan.roof.endTime)roofVideo.play().catch(()=>{});drawSource(roofVideo.readyState>1?roofVideo:asset(plan.roof.poster));panel($('rooftop'),1,now);phase='roof-hold';}
   else{stopVideos();arrivalKey='';const paths=plan.descent.frames,fp=Math.min(p/.84,1),cut=plan.descent.firstPartFraction,wanted=fp<cut?Math.round(fp/cut*60):61+Math.round((fp-cut)/(1-cut)*60);let found=wanted;while(found>0&&!images.has(paths[found]))found--;const im=images.get(paths[found]);drawSource(im||asset(plan.roof.poster));if(p>.84){still(plan.services[0].outside,smooth(.84,1,p));notice('接続映像準備中');}canvas.dataset.renderedFrame=String(found);phase='roof-descent';}
   light=true;document.body.dataset.mediaState=phase;document.body.dataset.mediaKind='existing-video';
  }
  else if(y<filmEnd){
   roofVideo.pause();beginCanvas();let i=0;for(let j=0;j<plan.services.length;j++)if(y>=bounds[j+2].top)i=j;chapter=i+2;const s=plan.services[i],state=servicePhase(bounds[i+2]);
+  mobileFocalPoint=mobileFocalPoints[s.id]??.5;
+  const nextService=plan.services[i+1];
+  if(state.key==='transfer'&&nextService){const target=mobileFocalPoints[nextService.id]??.5;mobileFocalPoint+=(target-mobileFocalPoint)*smooth(0,1,state.p);}
   if(plan.mode==='temporary-motion'){
    if(state.key==='outside'){dwell(i);panel($(s.id),1,now);}
    else{stopVideos();arrivalKey='';if(i<plan.services.length-1)travel(i,state.p);else{dwell(i,1,false);$('mediaDeck').style.opacity=1-smooth(.08,.9,state.p);$('blackTide').style.transform='translateY('+(110*(1-smooth(.08,.9,state.p)))+'%)';}}

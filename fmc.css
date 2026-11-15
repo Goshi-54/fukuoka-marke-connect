@@ -2,7 +2,7 @@
 .intro-copy h1{letter-spacing:.22em}
 .intro-copy .intro-date{margin:0;font:400 12px var(--sans);letter-spacing:.42em;color:#c9d3d6}
 @media(min-width:881px){.concept-surface h2{font-size:clamp(22px,2.3vw,34px)}}
-.concept-date{margin-top:14px!important;font-size:13px!important;letter-spacing:.12em;color:#2c4a55}
+.concept-surface .concept-subtitle{font-weight:600;color:#213d49}
 
 /* 確定前の印 */
 .tbd{display:inline-block;margin:0 .4em;padding:.15em .7em;border:1px dashed #b9892e;border-radius:4px;background:#fff3d6cc;color:#7a5512;font:500 11px/1.6 var(--sans);letter-spacing:.04em;vertical-align:middle;white-space:nowrap}
@@ -32,7 +32,7 @@ body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-co
  .proto-tag{position:fixed;top:calc(var(--header) - 6px);left:16px;padding:3px 8px;font-size:8px;background:#0c0c0e99}
  body.paper-active .proto-tag,.header.is-light .proto-tag{background:#fff3d6cc}
  .schedule-surface .entry-button{display:none}
- .service-journey .scene,.rooftop-chapter .scene{padding-bottom:110px!important}
+ .rooftop-chapter .scene{padding-bottom:110px!important}
  .event-facts dd{font-size:13px}
 }
 
@@ -86,6 +86,8 @@ body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-co
 .map-link:hover{background:#223a44;color:#f0f3ef}
 .event-facts dd .map-link,.entry-summary dd .map-link{display:flex}
 .field-note{margin:4px 0 0!important;padding:9px 11px;border-left:3px solid #b9892e;background:#fff3d699;font-size:11px!important;line-height:1.8!important;color:#4a3a14}
+.party-cancel-note{display:none}
+.choice-row:has(#f-plan-party:checked)+.party-cancel-note{display:block;margin:0 0 8px!important}
 .guide-block{margin:18px 0 0;padding-top:14px;border-top:1px solid #2a43492a}
 .guide-block h4{margin:0 0 8px;font:600 13px var(--sans);letter-spacing:.04em}
 .guide-block p{margin:0!important;font-size:12px!important;line-height:1.9!important;white-space:pre-line}
@@ -144,3 +146,34 @@ body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-co
 .lecture-points{margin:0;padding:0 0 0 1.1em;font-size:13px;line-height:1.8;color:#18323c}
 .lecture-points li{margin:0 0 2px}
 @media(max-width:880px){.lecture-points{font-size:12px;line-height:1.7}}
+
+.event-facts .venue-with-map,.entry-summary .venue-with-map{display:flex;align-items:center;gap:8px}
+.venue-with-map>span{white-space:nowrap}
+.event-facts .venue-with-map .map-link,.entry-summary .venue-with-map .map-link{flex:none;margin:0;white-space:nowrap}
+.entry-summary .entry-party-note{margin-top:4px}
+
+@media(max-width:880px){
+ .service-journey .scene{position:sticky;top:0;height:100svh;min-height:0;align-items:flex-end;justify-content:center;padding:var(--header) 16px calc(80px + env(safe-area-inset-bottom));overflow:visible}
+ .service-journey .surface{max-height:calc(100svh - var(--header) - 94px - env(safe-area-inset-bottom));overflow-y:auto;padding:18px 20px;background:#eef3efec}
+ .service-journey .surface h2{margin:7px 0 12px}
+ .service-journey .surface .role{margin:0 0 9px!important;line-height:1.6!important}
+ .event-facts div,.entry-summary div{grid-template-columns:4.4em minmax(0,1fr);gap:6px}
+ .entry-summary .venue-with-map .map-link,.event-facts .venue-with-map .map-link{padding:4px 6px;gap:4px;font-size:10px;letter-spacing:0}
+ .venue-with-map{font-size:12px!important}
+}
+
+@media(max-width:355px){
+ .event-facts .venue-with-map,.entry-summary .venue-with-map{gap:4px}
+ .venue-with-map .map-link svg{display:none}
+ .venue-with-map{letter-spacing:0!important;font-size:11px!important}
+}
+/* 11/15 本人「変に2行になっているところとかは見栄えが悪いので、文章かそもそものカードの範囲や文字サイズなど調整で見栄えを良くしたい。」（DEC-1583）
+   言葉の途中で折り返さない。折り返す位置は index.html の <wbr> で決める。入りきらないときだけ、どこでも折り返す */
+.concept-surface h2,.concept-surface p,.lecture-title,.lecture-points li,.entry-summary dd,.sub-line,.check-row{word-break:keep-all;overflow-wrap:anywhere}
+.lecture-title,.concept-surface p{text-wrap:pretty}
+/* 大見出し「12月11日（金）／マーケコネクト、再開します」は2行のまま。幅の狭いスマホで「再開しま／す」とならないよう、文字を少し小さくする */
+@media(max-width:400px){.film-chapter .concept-surface h2{font-size:clamp(19px,5.6vw,22px);letter-spacing:.02em}}
+/* 11/15 本人「XのURLはアイコン付きにしたい。Xのアイコンではなくあどえるの。」（DEC-1553）・「アイコンの画像取得も許可」（DEC-1583）：講師1のXのリンクに、あどえるのアイコン */
+.x-link{width:fit-content}
+.x-link:has(.x-icon){display:inline-flex;align-items:center;gap:7px;padding-left:4px}
+.x-icon{width:20px;height:20px;border-radius:50%;flex:none;object-fit:cover}

@@ -183,3 +183,8 @@ body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-co
 .footer .footer-org a{color:inherit;text-decoration:underline;text-underline-offset:4px}
 .entry-summary .contact-chatwork{color:inherit;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
 @media(max-width:880px){.footer .footer-org{flex-direction:column;gap:4px;font-size:10.5px}}
+/* カードの透過率（11/16 本人決定「透過はもう少し上げた+ぼかし弱めで！講師2以外のところも」。16章の見比べの「もう少し上げた＋ぼかし弱め」） */
+@media(min-width:881px){.service-journey .surface,.rooftop-chapter .concept-surface{background:rgba(241,245,242,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}}
+@media(max-width:880px){.service-journey .surface,.rooftop-chapter .concept-surface{background:rgba(238,243,239,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}}
+/* 透けるカードの上の薄い文字を濃くする（11/16 本人決定「濃くして公開」）。後ろが一番明るい所で明るさの差4.5以上を目安に、サイトの濃い青緑の流れの #16282f にそろえる */
+.service-journey .surface .role,.service-journey .surface .lecture-label,.service-journey .surface .event-facts dt,.service-journey .surface .price-note,.rooftop-chapter .concept-surface .concept-subtitle{color:#16282f}

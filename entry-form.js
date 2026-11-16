@@ -48,7 +48,11 @@
     doneText.append(note);
    }
    form.hidden=true;done.hidden=false;done.focus({preventScroll:true});
-   scrollTo({top:done.getBoundingClientRect().top+scrollY-90,behavior:'instant'}); // サイト側のスクロール制御があるため instant で移動
+   // 受付の見出しをヘッダーの下に出す。送信中にページがまだ動いていると位置がずれるので、少しあとにも確かめ直す（見る人が自分で動かしたらやめる）
+   const header=document.querySelector('.header'),off=()=>(header?header.getBoundingClientRect().bottom:90)+12;
+   let userMoved=false;const stop=()=>{userMoved=true};addEventListener('wheel',stop,{once:true,passive:true});addEventListener('touchstart',stop,{once:true,passive:true});
+   const showDone=()=>{if(userMoved)return;const top=done.getBoundingClientRect().top;if(Math.abs(top-off())>4)scrollTo({top:Math.max(0,top+scrollY-off()),behavior:'instant'});};
+   showDone();requestAnimationFrame(()=>requestAnimationFrame(showDone));setTimeout(showDone,400);setTimeout(showDone,1000);
   }catch(e){
    error.textContent='送信できませんでした。時間をおいてもう一度お試しください。';error.hidden=false;status.textContent='';
   }finally{button.disabled=false;}

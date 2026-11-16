@@ -177,3 +177,9 @@ body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-co
 .x-link{width:fit-content}
 .x-link:has(.x-icon){display:inline-flex;align-items:center;gap:7px;padding-left:4px}
 .x-icon{width:20px;height:20px;border-radius:50%;flex:none;object-fit:cover}
+
+/* 主催とお問い合わせ（11/16） */
+.footer .footer-org{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 28px;margin:0;font-style:normal;font-size:11px;line-height:1.9;letter-spacing:.04em;color:#c3d1d6}
+.footer .footer-org a{color:inherit;text-decoration:underline;text-underline-offset:4px}
+.entry-summary .contact-chatwork{color:inherit;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+@media(max-width:880px){.footer .footer-org{flex-direction:column;gap:4px;font-size:10.5px}}

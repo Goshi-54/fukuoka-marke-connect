@@ -188,3 +188,10 @@ body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-co
 @media(max-width:880px){.service-journey .surface,.rooftop-chapter .concept-surface{background:rgba(238,243,239,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}}
 /* 透けるカードの上の薄い文字を濃くする（11/16 本人決定「濃くして公開」）。後ろが一番明るい所で明るさの差4.5以上を目安に、サイトの濃い青緑の流れの #16282f にそろえる */
 .service-journey .surface .role,.service-journey .surface .lecture-label,.service-journey .surface .event-facts dt,.service-journey .surface .price-note,.rooftop-chapter .concept-surface .concept-subtitle{color:#16282f}
+
+/* 簡易申し込みページへの導線（11/23追加） */
+.lite-link{display:inline-flex;align-items:center;padding:8px 13px;border:1px solid #ffffff38;border-radius:25px;font-size:10px;letter-spacing:.08em;white-space:nowrap;transition:background .25s,color .25s,border-color .25s}
+.lite-link:hover{background:#ffffff1a}
+.header.is-light .lite-link,body.paper-active .lite-link{border-color:#21313944;color:#15272e}
+.header.is-light .lite-link:hover,body.paper-active .lite-link:hover{background:#21313910}
+@media(max-width:600px){.lite-link{padding:6px 10px;font-size:9px}}

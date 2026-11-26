@@ -56,7 +56,7 @@ img{max-width:100%;height:auto;display:block}
 .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .95fr;gap:44px;align-items:center}
 .hero-copy .eyebrow::before{display:none}
 .hero-copy .eyebrow{color:#b6c2c7;letter-spacing:.32em}
-.hero-copy h1{margin:8px 0 14px;font:400 clamp(30px,4vw,52px) var(--serif);letter-spacing:.18em;line-height:1.35;color:#f5f6f3;text-shadow:0 2px 20px rgba(0,0,0,.75)}
+.hero-copy h1{margin:8px 0 14px;font:400 clamp(26px,3.4vw,44px) var(--serif);letter-spacing:.12em;line-height:1.35;white-space:nowrap;color:#f5f6f3;text-shadow:0 2px 20px rgba(0,0,0,.75)}
 .hero-date{margin:0 0 20px;font-size:12.5px;letter-spacing:.2em;color:#cfd8dc;text-shadow:0 1px 12px rgba(0,0,0,.7)}
 .hero-theme{margin:0 0 12px;font:500 clamp(17px,1.8vw,22px) var(--serif);line-height:1.65;color:#f4f6f4;word-break:keep-all;overflow-wrap:anywhere;text-shadow:0 2px 14px rgba(0,0,0,.75)}
 .hero-lead{margin:0 0 28px;font-size:13.5px;line-height:2.05;color:#dce4e7;text-shadow:0 1px 12px rgba(0,0,0,.75)}
@@ -154,7 +154,7 @@ img{max-width:100%;height:auto;display:block}
 .check-row em{font-style:normal;font-size:10px;color:#566f78;margin-left:6px}
 .field-note{margin:4px 0 0;padding:9px 11px;border-left:3px solid #b9892e;background:#fff3d6cc;font-size:11.5px;line-height:1.75;color:#4a3a14}
 .party-cancel-note{display:none}
-.choice-row:has(#f-plan-party:checked)+.party-cancel-note{display:block;margin:0 0 8px}
+#f-plan:has(#f-plan-party:checked,#f-plan-party-only:checked) .party-cancel-note{display:block;margin:0 0 8px}
 .is-invalid input,.is-invalid select,.is-invalid textarea,.choice.is-invalid .choice-row,.check-row.is-invalid{border-color:#b55d3e!important;background:#f6e6dd88}
 .check-row.is-invalid{padding:6px 8px;border-radius:4px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}

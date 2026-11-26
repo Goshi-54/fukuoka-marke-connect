@@ -87,7 +87,7 @@ body.paper-active .proto-tag,.header.is-light .proto-tag{color:#7a5512;border-co
 .event-facts dd .map-link,.entry-summary dd .map-link{display:flex}
 .field-note{margin:4px 0 0!important;padding:9px 11px;border-left:3px solid #b9892e;background:#fff3d699;font-size:11px!important;line-height:1.8!important;color:#4a3a14}
 .party-cancel-note{display:none}
-.choice-row:has(#f-plan-party:checked)+.party-cancel-note{display:block;margin:0 0 8px!important}
+#f-plan:has(#f-plan-party:checked,#f-plan-party-only:checked) .party-cancel-note{display:block;margin:0 0 8px!important}
 .guide-block{margin:18px 0 0;padding-top:14px;border-top:1px solid #2a43492a}
 .guide-block h4{margin:0 0 8px;font:600 13px var(--sans);letter-spacing:.04em}
 .guide-block p{margin:0!important;font-size:12px!important;line-height:1.9!important;white-space:pre-line}
